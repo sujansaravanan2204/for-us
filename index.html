@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Enter ❤️</title>
+<title>Us ❤️</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
     background: black;
     color: white;
-    height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
-    overflow: hidden;
-
-    opacity: 0;
-    transition: opacity 0.8s ease;
+    overflow-x: hidden;
 }
 
-body.loaded {
-    opacity: 1;
-}
-
-/* WELCOME */
-.welcome {
+/* COMMON SCREEN */
+.screen {
     position: absolute;
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 32px;
     text-align: center;
     transition: opacity 1s;
 }
 
-/* GLOW NAME */
+/* HIDE */
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* WELCOME */
 .glow {
     color: #ff7eb3;
     animation: glow 1.5s infinite;
@@ -48,55 +50,88 @@ body.loaded {
 }
 
 /* LOGIN */
-.box {
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0;
-    transition: opacity 1s;
-}
-
-/* INPUT */
 input {
     padding: 12px;
     border-radius: 8px;
     border: none;
-    outline: none;
     width: 220px;
 }
 
-/* BUTTON */
 button {
-    padding: 10px 15px;
-    margin-top: 15px;
+    padding: 10px;
+    margin-top: 10px;
     border: none;
     border-radius: 8px;
     background: #ff7eb3;
     color: white;
-    cursor: pointer;
 }
 
-/* ERROR */
 #error {
-    color: red;
-    margin-top: 10px;
     display: none;
+    color: red;
 }
 
-/* UNLOCK TEXT */
-#unlockText {
-    margin-top: 15px;
+/* INTRO */
+.intro h1 {
+    font-size: 60px;
+    animation: fade 2s forwards;
+}
+
+@keyframes fade {
+    from {opacity: 0; transform: scale(0.8);}
+    to {opacity: 1; transform: scale(1);}
+}
+
+/* HOME */
+.home {
+    display: none;
+    flex-direction: column;
+}
+
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    background: rgba(0,0,0,0.4);
+}
+
+/* HERO */
+.hero {
+    height: 100vh;
+    background: url("photo1.jpeg") center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* SECTIONS */
+.section {
+    padding: 100px 20px;
+    background: #111;
     opacity: 0;
-    transition: 0.5s;
-    color: #ff7eb3;
+    transform: translateY(40px);
+    transition: 1s;
 }
 
-/* MOBILE */
-@media (max-width: 600px) {
-    input { width: 180px; }
-    .welcome { font-size: 24px; }
+.section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* HEARTS */
+.heart {
+    position: fixed;
+    bottom: -10px;
+    color: pink;
+    animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+    to { transform: translateY(-100vh); opacity: 0; }
 }
 </style>
 </head>
@@ -105,11 +140,11 @@ button {
 
 <!-- MUSIC -->
 <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
+    <source src="music.mp3">
 </audio>
 
 <!-- WELCOME -->
-<div class="welcome" id="welcome">
+<div class="screen" id="welcome">
     <div>
         <span id="typed"></span><br><br>
         <span class="glow">AKA VIDHU MAA ❤️</span><br><br>
@@ -118,75 +153,116 @@ button {
 </div>
 
 <!-- LOGIN -->
-<div class="box" id="loginBox">
-    <h2>Enter the password ❤️</h2>
+<div class="screen hidden" id="login">
+    <div>
+        <h2>Enter password ❤️</h2>
+        <input type="password" id="pass"><br>
+        <button onclick="check()">Enter</button>
+        <div id="error">Wrong password chelloo ❤️</div>
+    </div>
+</div>
 
-    <input type="password" id="pass" placeholder="Only you know..." />
-    <br>
+<!-- INTRO -->
+<div class="screen hidden intro" id="intro">
+    <h1>US ❤️</h1>
+</div>
 
-    <button onclick="check()">Enter</button>
+<!-- HOME -->
+<div class="home" id="home">
 
-    <div id="error">Wrong password chelloo ❤️</div>
-    <div id="unlockText">Unlocking...</div>
+<div class="navbar">
+    <a href="#home">Home</a>
+    <a href="#memories">Memories</a>
+</div>
+
+<div class="hero">
+    <h1 id="mainText"></h1>
+</div>
+
+<div class="section" id="memories">
+    <h2>Our Memories 📸</h2>
+    <img src="photo1.jpeg" width="250">
+    <p>The day everything started ❤️</p>
+</div>
+
 </div>
 
 <script>
 
-/* FADE IN */
-window.onload = () => {
-    document.body.classList.add("loaded");
-    typeText();
-};
-
-/* TYPEWRITER */
-let text = "Vanakkam Kuttima 🙏❤️";
-let i = 0;
-
-function typeText() {
-    if (i < text.length) {
-        document.getElementById("typed").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeText, 80);
-    }
-}
-
-/* START MUSIC ON FIRST TAP */
+/* MUSIC START */
 let music = document.getElementById("bgMusic");
 document.body.addEventListener("click", () => {
     music.play();
 }, { once: true });
 
-/* SWITCH SCREEN */
+/* TYPE TEXT */
+let text = "Vanakkam Kuttima 🙏❤️";
+let i = 0;
+
+function typeText() {
+    if (i < text.length) {
+        document.getElementById("typed").innerHTML += text[i];
+        i++;
+        setTimeout(typeText, 80);
+    }
+}
+typeText();
+
+/* FLOW */
 setTimeout(() => {
-    document.getElementById("welcome").style.opacity = "0";
-
-    setTimeout(() => {
-        document.getElementById("loginBox").style.opacity = "1";
-    }, 800);
-
+    document.getElementById("welcome").classList.add("hidden");
+    document.getElementById("login").classList.remove("hidden");
 }, 3500);
 
-/* LOGIN */
 function check() {
-    let p = document.getElementById("pass").value;
+    if (document.getElementById("pass").value === "2502") {
 
-    if (p === "2502") {
-
-        document.getElementById("unlockText").style.opacity = "1";
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("intro").classList.remove("hidden");
 
         setTimeout(() => {
-            document.body.classList.remove("loaded");
-
-            setTimeout(() => {
-                window.location.href = "intro.html";
-            }, 500);
-
-        }, 1000);
+            document.getElementById("intro").classList.add("hidden");
+            document.getElementById("home").style.display = "block";
+            startMain();
+        }, 2500);
 
     } else {
         document.getElementById("error").style.display = "block";
     }
 }
+
+/* MAIN TEXT */
+function startMain() {
+    let text = "Hey Love ❤️";
+    let i = 0;
+    function type() {
+        if (i < text.length) {
+            document.getElementById("mainText").innerHTML += text[i];
+            i++;
+            setTimeout(type, 80);
+        }
+    }
+    type();
+}
+
+/* SCROLL ANIMATION */
+window.addEventListener("scroll", () => {
+    document.querySelectorAll(".section").forEach(sec => {
+        if (sec.getBoundingClientRect().top < window.innerHeight - 100) {
+            sec.classList.add("show");
+        }
+    });
+});
+
+/* HEARTS */
+setInterval(() => {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}, 500);
 
 </script>
 
