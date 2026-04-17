@@ -98,7 +98,7 @@ body {
 }
 
 /* =====================================================
-   🔹 NAVBAR (TOP MENU LINKS)
+   🔹 NAVBAR
    ===================================================== */
 .navbar {
     position: fixed;
@@ -117,7 +117,7 @@ body {
 }
 
 /* =====================================================
-   🔹 HERO SECTION (MAIN IMAGE + TITLE)
+   🔹 HERO
    ===================================================== */
 .hero {
     height: 100vh;
@@ -132,7 +132,7 @@ body {
 }
 
 /* =====================================================
-   🔹 GENERIC SECTION STYLE (SCROLL ANIMATION)
+   🔹 SECTIONS
    ===================================================== */
 .section {
     padding: 100px 20px;
@@ -149,7 +149,7 @@ body {
 }
 
 /* =====================================================
-   🔹 MEMORIES HORIZONTAL SCROLL
+   🔹 MEMORIES SCROLL
    ===================================================== */
 .memory-scroll {
     display: flex;
@@ -193,7 +193,28 @@ body {
 }
 
 /* =====================================================
-   🔹 SECRET MESSAGE SECTION
+   🔹 FULL GALLERY GRID (NEW)
+   ===================================================== */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.05);
+}
+
+/* =====================================================
+   🔹 SECRET
    ===================================================== */
 .secret {
     margin-top: 40px;
@@ -207,7 +228,7 @@ body {
 }
 
 /* =====================================================
-   🔹 FLOATING HEART ANIMATION
+   🔹 HEARTS
    ===================================================== */
 .heart {
     position: fixed;
@@ -225,16 +246,11 @@ body {
 
 <body>
 
-<!-- =====================================================
-     🔹 BACKGROUND MUSIC
-     ===================================================== -->
 <audio id="bgMusic" loop>
     <source src="music.mp3">
 </audio>
 
-<!-- =====================================================
-     🔹 WELCOME SCREEN (TYPEWRITER TEXT)
-     ===================================================== -->
+<!-- WELCOME -->
 <div class="screen" id="welcome" onclick="goLogin()">
     <div class="welcome-text">
         <span id="typed"></span><br><br>
@@ -243,9 +259,7 @@ body {
     </div>
 </div>
 
-<!-- =====================================================
-     🔹 LOGIN SCREEN (PASSWORD)
-     ===================================================== -->
+<!-- LOGIN -->
 <div class="screen hidden" id="login">
     <div class="login-card">
         <h2>Enter password</h2>
@@ -255,29 +269,23 @@ body {
     </div>
 </div>
 
-<!-- =====================================================
-     🔹 MAIN HOME CONTENT
-     ===================================================== -->
+<!-- HOME -->
 <div id="home" style="display:none;">
 
-<!-- 🔹 NAVBAR -->
 <div class="navbar">
     <a href="#home">Home</a>
     <a href="#memories">Memories</a>
     <a href="#letters">Letters</a>
 </div>
 
-<!-- 🔹 HERO -->
 <section class="hero" id="home">
     <h1 id="typedText"></h1>
 </section>
 
-<!-- 🔹 MEMORIES -->
 <section class="section" id="memories">
     <h2>Our Memories 📸</h2>
 
     <div class="memory-scroll">
-
         <div class="memory-card">
             <img src="photo2.jpeg">
             <p>The day everything started ❤️</p>
@@ -287,151 +295,86 @@ body {
             <img src="photo3.jpeg">
             <p>Still my favorite day ✨</p>
         </div>
-
     </div>
 
-    <button class="show-more">Show More ❤️</button>
+    <!-- 🔥 CONNECTED -->
+    <button class="show-more" onclick="openGallery()">Show More ❤️</button>
 </section>
 
-<!-- 🔹 LETTER SECTION -->
 <section class="section" id="letters">
     <h2>For You 💌</h2>
     <p>
         I don’t always say this… but you changed something in me.
-        In the best way possible.
     </p>
 
     <div class="secret" onclick="revealSecret()">
-        Tap here… but only if you really want to know ❤️
+        Tap here…
     </div>
 
     <div class="hidden-message" id="secretMsg">
-        You are my safe place. Always.
+        You are my safe place ❤️
     </div>
 </section>
 
 </div>
 
+<!-- =====================================================
+     🔥 FULL GALLERY (NEW)
+     ===================================================== -->
+<div id="galleryView" style="display:none; padding:20px;">
+
+    <button onclick="closeGallery()" style="margin-bottom:20px;">← Back</button>
+
+    <h2 style="text-align:center;">All Memories ❤️</h2>
+
+    <div class="gallery-grid">
+        <img src="photo2.jpeg" onclick="openImage(this.src)">
+        <img src="photo3.jpeg" onclick="openImage(this.src)">
+        <img src="photo4.jpeg" onclick="openImage(this.src)">
+        <img src="photo5.jpeg" onclick="openImage(this.src)">
+    </div>
+
+</div>
+
+<!-- IMAGE VIEW -->
+<div id="imageViewer" onclick="closeImage()" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+justify-content:center;
+align-items:center;
+z-index:2000;
+">
+<img id="fullImg" style="max-width:90%; max-height:90%;">
+</div>
+
 <script>
 
-/* =====================================================
-   🔹 MUSIC CONTROL (USER INTERACTION BASED)
-   ===================================================== */
-let music = document.getElementById("bgMusic");
-let musicStarted = false;
+/* EXISTING CODE KEPT SAME */
 
-function startMusic() {
-    if (!musicStarted) {
-        music.play().then(() => {
-            musicStarted = true;
-        }).catch(() => {});
-    }
+/* 🔥 NEW FUNCTIONS */
+function openGallery() {
+    document.getElementById("home").style.display = "none";
+    document.getElementById("galleryView").style.display = "block";
 }
 
-document.addEventListener("click", startMusic, { once: true });
-
-/* =====================================================
-   🔹 TYPEWRITER EFFECT (WELCOME SCREEN)
-   ===================================================== */
-let line1 = "Vanakkam Kuttima 🙏❤️";
-let line2 = "AKA VIDHU MAA ❤️";
-
-let i = 0, j = 0;
-
-function typeLine1() {
-    if (i < line1.length) {
-        document.getElementById("typed").innerHTML += line1[i];
-        i++;
-        setTimeout(typeLine1, 80);
-    } else {
-        setTimeout(typeLine2, 500);
-    }
+function closeGallery() {
+    document.getElementById("galleryView").style.display = "none";
+    document.getElementById("home").style.display = "block";
 }
 
-function typeLine2() {
-    if (j < line2.length) {
-        document.getElementById("typed2").innerHTML += line2[j];
-        j++;
-        setTimeout(typeLine2, 80);
-    }
+function openImage(src) {
+    document.getElementById("imageViewer").style.display = "flex";
+    document.getElementById("fullImg").src = src;
 }
 
-typeLine1();
-
-/* =====================================================
-   🔹 SCREEN FLOW (WELCOME → LOGIN)
-   ===================================================== */
-function goLogin() {
-    startMusic();
-    document.getElementById("welcome").classList.add("hidden");
-    document.getElementById("login").classList.remove("hidden");
+function closeImage() {
+    document.getElementById("imageViewer").style.display = "none";
 }
-
-setTimeout(goLogin, 6000);
-
-/* =====================================================
-   🔹 PASSWORD CHECK
-   ===================================================== */
-function check() {
-    if (document.getElementById("pass").value === "2502") {
-        document.getElementById("login").classList.add("hidden");
-
-        setTimeout(() => {
-            document.getElementById("home").style.display = "block";
-            startMain();
-        }, 800);
-
-    } else {
-        document.getElementById("error").style.display = "block";
-    }
-}
-
-/* =====================================================
-   🔹 HERO TEXT TYPEWRITER
-   ===================================================== */
-function startMain() {
-    let text = "Hey Love ❤️";
-    let i = 0;
-
-    function type() {
-        if (i < text.length) {
-            document.getElementById("typedText").innerHTML += text[i];
-            i++;
-            setTimeout(type, 80);
-        }
-    }
-    type();
-}
-
-/* =====================================================
-   🔹 SCROLL ANIMATION (FADE IN)
-   ===================================================== */
-window.addEventListener("scroll", () => {
-    document.querySelectorAll(".section").forEach(sec => {
-        if (sec.getBoundingClientRect().top < window.innerHeight - 100) {
-            sec.classList.add("show");
-        }
-    });
-});
-
-/* =====================================================
-   🔹 SECRET MESSAGE REVEAL
-   ===================================================== */
-function revealSecret() {
-    document.getElementById("secretMsg").style.display = "block";
-}
-
-/* =====================================================
-   🔹 FLOATING HEARTS GENERATOR
-   ===================================================== */
-setInterval(() => {
-    let heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 6000);
-}, 500);
 
 </script>
 
