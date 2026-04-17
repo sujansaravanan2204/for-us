@@ -19,7 +19,7 @@ body {
     overflow-x: hidden;
 }
 
-/* COMMON SCREEN */
+/* SCREEN CONTROL */
 .screen {
     position: absolute;
     width: 100%;
@@ -31,7 +31,6 @@ body {
     transition: opacity 1s;
 }
 
-/* HIDE */
 .hidden {
     opacity: 0;
     pointer-events: none;
@@ -82,21 +81,29 @@ button {
     to {opacity: 1; transform: scale(1);}
 }
 
-/* HOME */
+/* HOME SECTION (YOUR ORIGINAL UI) */
 .home {
     display: none;
-    flex-direction: column;
 }
 
 /* NAVBAR */
 .navbar {
     position: fixed;
+    top: 0;
     width: 100%;
     padding: 15px;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 30px;
     background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 /* HERO */
@@ -106,20 +113,34 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+}
+
+#typedText {
+    font-size: 50px;
+    text-shadow: 0 0 20px black;
 }
 
 /* SECTIONS */
 .section {
     padding: 100px 20px;
-    background: #111;
+    text-align: center;
     opacity: 0;
     transform: translateY(40px);
     transition: 1s;
+    background: #111;
 }
 
 .section.show {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* MEMORY */
+.memory img {
+    width: 250px;
+    border-radius: 12px;
+    margin: 10px;
 }
 
 /* HEARTS */
@@ -132,6 +153,17 @@ button {
 
 @keyframes floatUp {
     to { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* MUSIC BUTTON */
+.music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.2);
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
 }
 </style>
 </head>
@@ -167,46 +199,64 @@ button {
     <h1>US ❤️</h1>
 </div>
 
-<!-- HOME -->
+<!-- FULL HOME UI -->
 <div class="home" id="home">
 
 <div class="navbar">
     <a href="#home">Home</a>
     <a href="#memories">Memories</a>
+    <a href="#letters">Letters</a>
 </div>
 
-<div class="hero">
-    <h1 id="mainText"></h1>
-</div>
+<section class="hero" id="home">
+    <h1 id="typedText"></h1>
+</section>
 
-<div class="section" id="memories">
+<section class="section" id="memories">
     <h2>Our Memories 📸</h2>
-    <img src="photo1.jpeg" width="250">
-    <p>The day everything started ❤️</p>
-</div>
+
+    <div class="memory">
+        <img src="photo1.jpeg">
+        <p>The day everything started ❤️</p>
+    </div>
+
+    <div class="memory">
+        <img src="photo2.jpeg">
+        <p>Still my favorite day ✨</p>
+    </div>
+</section>
+
+<section class="section" id="letters">
+    <h2>For You 💌</h2>
+    <p>
+        I don’t always say this… but you changed something in me.
+        In the best way possible.
+    </p>
+</section>
+
+<div class="music-btn" onclick="toggleMusic()">🎵</div>
 
 </div>
 
 <script>
 
-/* MUSIC START */
+/* MUSIC */
 let music = document.getElementById("bgMusic");
 document.body.addEventListener("click", () => {
     music.play();
 }, { once: true });
 
-/* TYPE TEXT */
-let text = "Vanakkam Kuttima 🙏❤️";
+/* TYPING (WELCOME) */
+let t = "Vanakkam Kuttima 🙏❤️";
 let i = 0;
-
-function typeText() {
-    if (i < text.length) {
-        document.getElementById("typed").innerHTML += text[i];
+function typeWelcome() {
+    if (i < t.length) {
+        document.getElementById("typed").innerHTML += t[i];
         i++;
-        setTimeout(typeText, 80);
+        setTimeout(typeWelcome, 80);
     }
 }
-typeText();
+typeWelcome();
 
 /* FLOW */
 setTimeout(() => {
@@ -237,7 +287,7 @@ function startMain() {
     let i = 0;
     function type() {
         if (i < text.length) {
-            document.getElementById("mainText").innerHTML += text[i];
+            document.getElementById("typedText").innerHTML += text[i];
             i++;
             setTimeout(type, 80);
         }
@@ -245,7 +295,7 @@ function startMain() {
     type();
 }
 
-/* SCROLL ANIMATION */
+/* SCROLL */
 window.addEventListener("scroll", () => {
     document.querySelectorAll(".section").forEach(sec => {
         if (sec.getBoundingClientRect().top < window.innerHeight - 100) {
@@ -263,6 +313,18 @@ setInterval(() => {
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 6000);
 }, 500);
+
+/* MUSIC TOGGLE */
+let isPlaying = true;
+function toggleMusic() {
+    if (isPlaying) {
+        music.pause();
+        isPlaying = false;
+    } else {
+        music.play();
+        isPlaying = true;
+    }
+}
 
 </script>
 
