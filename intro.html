@@ -3,6 +3,8 @@
 <head>
 <title>Loading...</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
     margin: 0;
@@ -12,18 +14,36 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    font-family: Arial;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
 }
 
+/* TEXT */
 h1 {
     font-size: 60px;
     opacity: 0;
+    letter-spacing: 5px;
     animation: fade 3s forwards;
+    text-shadow: 0 0 20px rgba(255,255,255,0.6);
 }
 
+/* FADE ANIMATION */
 @keyframes fade {
-    0% {opacity: 0; transform: scale(0.8);}
-    100% {opacity: 1; transform: scale(1);}
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 36px;
+    }
 }
 </style>
 </head>
@@ -33,9 +53,12 @@ h1 {
 <h1>US ❤️</h1>
 
 <script>
+
+/* REDIRECT TO MAIN SITE */
 setTimeout(() => {
-    window.location.href = "index.html";
+    window.location.href = "home.html";
 }, 3000);
+
 </script>
 
 </body>
