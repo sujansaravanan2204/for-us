@@ -36,74 +36,62 @@ body {
     pointer-events: none;
 }
 
-/* WELCOME */
-.glow {
-    color: #ff7eb3;
-    animation: glow 1.5s infinite;
+/* WELCOME TEXT */
+.welcome-text {
+    font-size: 32px;
+    line-height: 1.6;
 }
 
-@keyframes glow {
-    0% { text-shadow: 0 0 10px #ff7eb3; }
-    50% { text-shadow: 0 0 25px #ff4b7d; }
-    100% { text-shadow: 0 0 10px #ff7eb3; }
+/* LOGIN CARD (PRO LEVEL) */
+.login-card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    padding: 40px 30px;
+    border-radius: 16px;
+    width: 280px;
+    box-shadow: 0 0 30px rgba(255,255,255,0.08);
 }
 
-/* LOGIN */
-input {
+/* TITLE */
+.login-card h2 {
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+/* INPUT */
+.login-card input {
+    width: 100%;
     padding: 12px;
-    border-radius: 8px;
+    border-radius: 10px;
     border: none;
-    width: 220px;
+    outline: none;
+    margin-top: 10px;
+    background: rgba(255,255,255,0.1);
+    color: white;
 }
 
-button {
-    padding: 10px;
-    margin-top: 10px;
+/* BUTTON */
+.login-card button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     background: #ff7eb3;
     color: white;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
+.login-card button:hover {
+    background: #ff4b7d;
+}
+
+/* ERROR */
 #error {
+    margin-top: 10px;
+    color: #ff4b7d;
     display: none;
-    color: red;
-}
-
-/* INTRO */
-.intro h1 {
-    font-size: 60px;
-    animation: fade 2s forwards;
-}
-
-@keyframes fade {
-    from {opacity: 0; transform: scale(0.8);}
-    to {opacity: 1; transform: scale(1);}
-}
-
-/* HOME SECTION (YOUR ORIGINAL UI) */
-.home {
-    display: none;
-}
-
-/* NAVBAR */
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 15px;
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-}
-
-.navbar a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
 }
 
 /* HERO */
@@ -113,34 +101,24 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
 }
 
 #typedText {
     font-size: 50px;
-    text-shadow: 0 0 20px black;
 }
 
-/* SECTIONS */
+/* SECTION */
 .section {
     padding: 100px 20px;
-    text-align: center;
+    background: #111;
     opacity: 0;
     transform: translateY(40px);
     transition: 1s;
-    background: #111;
 }
 
 .section.show {
     opacity: 1;
     transform: translateY(0);
-}
-
-/* MEMORY */
-.memory img {
-    width: 250px;
-    border-radius: 12px;
-    margin: 10px;
 }
 
 /* HEARTS */
@@ -155,86 +133,69 @@ button {
     to { transform: translateY(-100vh); opacity: 0; }
 }
 
-/* MUSIC BUTTON */
-.music-btn {
+/* NAVBAR */
+.navbar {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(255,255,255,0.2);
-    padding: 10px 15px;
-    border-radius: 10px;
-    cursor: pointer;
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    background: rgba(0,0,0,0.4);
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    .welcome-text { font-size: 24px; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- MUSIC -->
 <audio id="bgMusic" loop>
     <source src="music.mp3">
 </audio>
 
 <!-- WELCOME -->
 <div class="screen" id="welcome">
-    <div>
+    <div class="welcome-text">
         <span id="typed"></span><br><br>
-        <span class="glow">AKA VIDHU MAA ❤️</span><br><br>
+        <span id="typed2"></span><br><br>
         I made something for you ✨
     </div>
 </div>
 
 <!-- LOGIN -->
 <div class="screen hidden" id="login">
-    <div>
-        <h2>Enter password ❤️</h2>
-        <input type="password" id="pass"><br>
-        <button onclick="check()">Enter</button>
-        <div id="error">Wrong password chelloo ❤️</div>
+    <div class="login-card">
+        <h2>Enter password</h2>
+
+        <input type="password" id="pass" placeholder="Only you know..." />
+
+        <button onclick="check()">Unlock</button>
+
+        <div id="error">Wrong password ❤️</div>
     </div>
 </div>
 
-<!-- INTRO -->
-<div class="screen hidden intro" id="intro">
-    <h1>US ❤️</h1>
-</div>
-
-<!-- FULL HOME UI -->
-<div class="home" id="home">
+<!-- HOME -->
+<div id="home" style="display:none;">
 
 <div class="navbar">
     <a href="#home">Home</a>
     <a href="#memories">Memories</a>
-    <a href="#letters">Letters</a>
 </div>
 
-<section class="hero" id="home">
+<div class="hero">
     <h1 id="typedText"></h1>
-</section>
+</div>
 
-<section class="section" id="memories">
+<div class="section" id="memories">
     <h2>Our Memories 📸</h2>
-
-    <div class="memory">
-        <img src="photo1.jpeg">
-        <p>The day everything started ❤️</p>
-    </div>
-
-    <div class="memory">
-        <img src="photo2.jpeg">
-        <p>Still my favorite day ✨</p>
-    </div>
-</section>
-
-<section class="section" id="letters">
-    <h2>For You 💌</h2>
-    <p>
-        I don’t always say this… but you changed something in me.
-        In the best way possible.
-    </p>
-</section>
-
-<div class="music-btn" onclick="toggleMusic()">🎵</div>
+    <img src="photo1.jpeg" width="250">
+    <p>The day everything started ❤️</p>
+</div>
 
 </div>
 
@@ -242,21 +203,37 @@ button {
 
 /* MUSIC */
 let music = document.getElementById("bgMusic");
-document.body.addEventListener("click", () => {
-    music.play();
-}, { once: true });
 
-/* TYPING (WELCOME) */
-let t = "Vanakkam Kuttima 🙏❤️";
-let i = 0;
-function typeWelcome() {
-    if (i < t.length) {
-        document.getElementById("typed").innerHTML += t[i];
+/* TYPING */
+let line1 = "Vanakkam Kuttima 🙏❤️";
+let line2 = "AKA VIDHU MAA ❤️";
+
+let i = 0, j = 0;
+
+function typeLine1() {
+    if (i < line1.length) {
+        document.getElementById("typed").innerHTML += line1[i];
         i++;
-        setTimeout(typeWelcome, 80);
+
+        if (i === 1) {
+            music.play().catch(()=>{});
+        }
+
+        setTimeout(typeLine1, 80);
+    } else {
+        setTimeout(typeLine2, 400);
     }
 }
-typeWelcome();
+
+function typeLine2() {
+    if (j < line2.length) {
+        document.getElementById("typed2").innerHTML += line2[j];
+        j++;
+        setTimeout(typeLine2, 80);
+    }
+}
+
+typeLine1();
 
 /* FLOW */
 setTimeout(() => {
@@ -264,17 +241,15 @@ setTimeout(() => {
     document.getElementById("login").classList.remove("hidden");
 }, 3500);
 
+/* LOGIN */
 function check() {
     if (document.getElementById("pass").value === "2502") {
-
         document.getElementById("login").classList.add("hidden");
-        document.getElementById("intro").classList.remove("hidden");
 
         setTimeout(() => {
-            document.getElementById("intro").classList.add("hidden");
             document.getElementById("home").style.display = "block";
             startMain();
-        }, 2500);
+        }, 800);
 
     } else {
         document.getElementById("error").style.display = "block";
@@ -285,6 +260,7 @@ function check() {
 function startMain() {
     let text = "Hey Love ❤️";
     let i = 0;
+
     function type() {
         if (i < text.length) {
             document.getElementById("typedText").innerHTML += text[i];
@@ -313,18 +289,6 @@ setInterval(() => {
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 6000);
 }, 500);
-
-/* MUSIC TOGGLE */
-let isPlaying = true;
-function toggleMusic() {
-    if (isPlaying) {
-        music.pause();
-        isPlaying = false;
-    } else {
-        music.play();
-        isPlaying = true;
-    }
-}
 
 </script>
 
