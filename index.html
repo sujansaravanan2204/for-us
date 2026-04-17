@@ -3,34 +3,57 @@
 <head>
 <title>Enter ❤️</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
+    margin: 0;
     background: black;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    font-family: Arial;
+    font-family: 'Segoe UI', sans-serif;
 }
 
+/* BOX */
 .box {
     text-align: center;
 }
 
+/* INPUT */
 input {
-    padding: 10px;
+    padding: 12px;
     border-radius: 8px;
     border: none;
+    outline: none;
+    width: 220px;
 }
 
+/* BUTTON */
 button {
-    padding: 10px;
-    margin-top: 10px;
+    padding: 10px 15px;
+    margin-top: 15px;
     border: none;
     border-radius: 8px;
     background: #ff7eb3;
     color: white;
+    cursor: pointer;
+}
+
+/* ERROR TEXT */
+#error {
+    color: red;
+    margin-top: 10px;
+    display: none;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    input {
+        width: 180px;
+    }
 }
 </style>
 </head>
@@ -39,21 +62,27 @@ button {
 
 <div class="box">
     <h2>Enter the password ❤️</h2>
-    <input type="password" id="pass" placeholder="Only you know...">
+
+    <input type="password" id="pass" placeholder="Only you know..." />
     <br>
+
     <button onclick="check()">Enter</button>
+
+    <div id="error">Wrong password ❤️</div>
 </div>
 
 <script>
+
 function check() {
     let p = document.getElementById("pass").value;
 
-    if (p === "2204") {  // CHANGE THIS
+    if (p === "2204") {   // 🔑 CHANGE THIS PASSWORD
         window.location.href = "intro.html";
     } else {
-        alert("Wrong password ❤️");
+        document.getElementById("error").style.display = "block";
     }
 }
+
 </script>
 
 </body>
