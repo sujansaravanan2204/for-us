@@ -19,7 +19,7 @@ body {
     overflow-x: hidden;
 }
 
-/* SCREEN CONTROL */
+/* SCREEN */
 .screen {
     position: absolute;
     width: 100%;
@@ -176,7 +176,7 @@ body {
     <div class="welcome-text">
         <span id="typed"></span><br><br>
         <span id="typed2"></span><br><br>
-        <small>Tap anywhere to continue ❤️</small>
+        <small>Tap to enter our world ❤️</small>
     </div>
 </div>
 
@@ -237,8 +237,19 @@ body {
 
 <script>
 
-/* MUSIC */
+/* MUSIC CONTROL (FIXED) */
 let music = document.getElementById("bgMusic");
+let musicStarted = false;
+
+function startMusic() {
+    if (!musicStarted) {
+        music.play().then(() => {
+            musicStarted = true;
+        }).catch(() => {});
+    }
+}
+
+document.addEventListener("click", startMusic, { once: true });
 
 /* TYPING */
 let line1 = "Vanakkam Kuttima 🙏❤️";
@@ -250,11 +261,6 @@ function typeLine1() {
     if (i < line1.length) {
         document.getElementById("typed").innerHTML += line1[i];
         i++;
-
-        if (i === 1) {
-            music.play().catch(()=>{});
-        }
-
         setTimeout(typeLine1, 80);
     } else {
         setTimeout(typeLine2, 500);
@@ -271,13 +277,15 @@ function typeLine2() {
 
 typeLine1();
 
-/* CLICK TO LOGIN */
+/* FLOW */
 function goLogin() {
+    startMusic();
+
     document.getElementById("welcome").classList.add("hidden");
     document.getElementById("login").classList.remove("hidden");
 }
 
-/* AUTO WAIT (longer now) */
+/* STAY LONGER */
 setTimeout(goLogin, 6000);
 
 /* LOGIN */
