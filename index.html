@@ -9,83 +9,70 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 body {
-    height: 100vh;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    color: white;
+}
+
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 15px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    gap: 30px;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.navbar a {
     color: white;
-    overflow: hidden;
-}
-
-/* background glow */
-body::before {
-    content: "";
-    position: absolute;
-    width: 500px;
-    height: 500px;
-    background: rgba(255,255,255,0.1);
-    filter: blur(120px);
-    top: -100px;
-    left: -100px;
-}
-
-/* container */
-.container {
-    text-align: center;
-    animation: fadeIn 2s ease;
-}
-
-/* title */
-h1 {
-    font-size: 60px;
-    margin-bottom: 10px;
-    text-shadow: 0 0 20px rgba(255,255,255,0.6);
-}
-
-/* subtitle */
-p {
-    margin-bottom: 40px;
-    opacity: 0.9;
-}
-
-/* buttons */
-.buttons a {
-    display: block;
-    margin: 12px auto;
-    padding: 14px;
-    width: 220px;
-    border-radius: 12px;
     text-decoration: none;
     font-weight: bold;
-    color: white;
-    
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(10px);
-    
     transition: 0.3s;
 }
 
-/* hover effect */
-.buttons a:hover {
-    transform: scale(1.08);
-    background: rgba(255,255,255,0.3);
+.navbar a:hover {
+    opacity: 0.7;
 }
 
-/* animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* HERO SECTION (BACKGROUND IMAGE) */
+.hero {
+    height: 100vh;
+    background: url("photo1.jpeg") no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 60px;
+    text-shadow: 0 0 20px black;
+}
+
+/* SECTION STYLE */
+.section {
+    padding: 100px 20px;
+    text-align: center;
+    background: #111;
+}
+
+.section h2 {
+    margin-bottom: 20px;
+}
+
+/* MEMORY IMAGES */
+.memory img {
+    width: 250px;
+    border-radius: 12px;
+    margin: 10px;
 }
 
 </style>
@@ -93,16 +80,41 @@ p {
 
 <body>
 
-<div class="container">
-    <h1>Hey Love ❤️</h1>
-    <p>This is our little world.</p>
-
-    <div class="buttons">
-        <a href="memories.html">Memories</a>
-        <a href="letters.html">Letters</a>
-        <a href="timeline.html">Our Story</a>
-    </div>
+<!-- NAVBAR -->
+<div class="navbar">
+    <a href="#home">Home</a>
+    <a href="#memories">Memories</a>
+    <a href="#letters">Letters</a>
 </div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <h1>Hey Love ❤️</h1>
+</section>
+
+<!-- MEMORIES -->
+<section class="section" id="memories">
+    <h2>Our Memories 📸</h2>
+
+    <div class="memory">
+        <img src="photo1.jpeg">
+        <p>Our first memory ❤️</p>
+    </div>
+
+    <div class="memory">
+        <img src="photo2.jpeg">
+        <p>Another beautiful moment ✨</p>
+    </div>
+</section>
+
+<!-- LETTERS -->
+<section class="section" id="letters">
+    <h2>Letters 💌</h2>
+    <p>
+        You can write something personal here…  
+        This is where it becomes special.
+    </p>
+</section>
 
 </body>
 </html>
