@@ -16,18 +16,25 @@ body {
     height: 100vh;
     font-family: 'Segoe UI', sans-serif;
     overflow: hidden;
+
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+body.loaded {
+    opacity: 1;
 }
 
 /* TEXT */
 h1 {
     font-size: 60px;
-    opacity: 0;
     letter-spacing: 5px;
-    animation: fade 3s forwards;
+    opacity: 0;
+    animation: fade 2s forwards;
     text-shadow: 0 0 20px rgba(255,255,255,0.6);
 }
 
-/* FADE ANIMATION */
+/* ANIMATION */
 @keyframes fade {
     0% {
         opacity: 0;
@@ -54,10 +61,21 @@ h1 {
 
 <script>
 
-/* REDIRECT TO MAIN SITE */
+/* FADE IN */
+window.onload = () => {
+    document.body.classList.add("loaded");
+};
+
+/* SMOOTH TRANSITION TO HOME */
 setTimeout(() => {
-    window.location.href = "home.html";
-}, 3000);
+
+    document.body.classList.remove("loaded");
+
+    setTimeout(() => {
+        window.location.href = "home.html";
+    }, 500);
+
+}, 2500);
 
 </script>
 
