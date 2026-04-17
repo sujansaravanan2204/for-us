@@ -132,11 +132,44 @@ body {
     transform: translateY(0);
 }
 
-/* MEMORY */
-.memory img {
-    width: 250px;
+/* 🔥 NEW MEMORY SCROLL */
+.memory-scroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 20px;
+    scroll-snap-type: x mandatory;
+}
+
+.memory-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.memory-card {
+    min-width: 250px;
+    flex-shrink: 0;
+    scroll-snap-align: center;
+    text-align: center;
+}
+
+.memory-card img {
+    width: 100%;
     border-radius: 12px;
-    margin: 10px;
+}
+
+.memory-card p {
+    margin-top: 10px;
+}
+
+/* BUTTON */
+.show-more {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #ff7eb3;
+    color: white;
+    cursor: pointer;
 }
 
 /* SECRET */
@@ -203,18 +236,25 @@ body {
     <h1 id="typedText"></h1>
 </section>
 
+<!-- 🔥 UPDATED MEMORIES -->
 <section class="section" id="memories">
     <h2>Our Memories 📸</h2>
 
-    <div class="memory">
-        <img src="photo1.jpeg">
-        <p>The day everything started ❤️</p>
+    <div class="memory-scroll">
+
+        <div class="memory-card">
+            <img src="photo2.jpeg">
+            <p>The day everything started ❤️</p>
+        </div>
+
+        <div class="memory-card">
+            <img src="photo3.jpeg">
+            <p>Still my favorite day ✨</p>
+        </div>
+
     </div>
 
-    <div class="memory">
-        <img src="photo2.jpeg">
-        <p>Still my favorite day ✨</p>
-    </div>
+    <button class="show-more">Show More ❤️</button>
 </section>
 
 <section class="section" id="letters">
@@ -237,7 +277,7 @@ body {
 
 <script>
 
-/* MUSIC CONTROL (FIXED) */
+/* MUSIC */
 let music = document.getElementById("bgMusic");
 let musicStarted = false;
 
@@ -280,12 +320,10 @@ typeLine1();
 /* FLOW */
 function goLogin() {
     startMusic();
-
     document.getElementById("welcome").classList.add("hidden");
     document.getElementById("login").classList.remove("hidden");
 }
 
-/* STAY LONGER */
 setTimeout(goLogin, 6000);
 
 /* LOGIN */
