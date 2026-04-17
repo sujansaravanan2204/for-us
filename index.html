@@ -22,7 +22,7 @@ body.loaded {
     opacity: 1;
 }
 
-/* FIRST SCREEN */
+/* WELCOME */
 .welcome {
     position: absolute;
     width: 100%;
@@ -35,7 +35,19 @@ body.loaded {
     transition: opacity 1s;
 }
 
-/* LOGIN BOX */
+/* GLOW NAME */
+.glow {
+    color: #ff7eb3;
+    animation: glow 1.5s infinite;
+}
+
+@keyframes glow {
+    0% { text-shadow: 0 0 10px #ff7eb3; }
+    50% { text-shadow: 0 0 25px #ff4b7d; }
+    100% { text-shadow: 0 0 10px #ff7eb3; }
+}
+
+/* LOGIN */
 .box {
     position: absolute;
     width: 100%;
@@ -83,28 +95,29 @@ button {
 
 /* MOBILE */
 @media (max-width: 600px) {
-    input {
-        width: 180px;
-    }
-
-    .welcome {
-        font-size: 24px;
-    }
+    input { width: 180px; }
+    .welcome { font-size: 24px; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- WELCOME SCREEN -->
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- WELCOME -->
 <div class="welcome" id="welcome">
     <div>
-        Vanakkam Kuttima 🙏❤️🙏<br><br>
+        <span id="typed"></span><br><br>
+        <span class="glow">AKA VIDHU MAA ❤️</span><br><br>
         I made something for you ✨
     </div>
 </div>
 
-<!-- LOGIN BOX -->
+<!-- LOGIN -->
 <div class="box" id="loginBox">
     <h2>Enter the password ❤️</h2>
 
@@ -119,22 +132,41 @@ button {
 
 <script>
 
-/* FADE IN PAGE */
+/* FADE IN */
 window.onload = () => {
     document.body.classList.add("loaded");
-
-    /* SWITCH FROM WELCOME → LOGIN */
-    setTimeout(() => {
-        document.getElementById("welcome").style.opacity = "0";
-
-        setTimeout(() => {
-            document.getElementById("loginBox").style.opacity = "1";
-        }, 800);
-
-    }, 2000); // time before switching
+    typeText();
 };
 
-/* LOGIN CHECK */
+/* TYPEWRITER */
+let text = "Vanakkam Kuttima 🙏❤️";
+let i = 0;
+
+function typeText() {
+    if (i < text.length) {
+        document.getElementById("typed").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeText, 80);
+    }
+}
+
+/* START MUSIC ON FIRST TAP */
+let music = document.getElementById("bgMusic");
+document.body.addEventListener("click", () => {
+    music.play();
+}, { once: true });
+
+/* SWITCH SCREEN */
+setTimeout(() => {
+    document.getElementById("welcome").style.opacity = "0";
+
+    setTimeout(() => {
+        document.getElementById("loginBox").style.opacity = "1";
+    }, 800);
+
+}, 3500);
+
+/* LOGIN */
 function check() {
     let p = document.getElementById("pass").value;
 
