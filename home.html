@@ -18,6 +18,13 @@ body {
     color: white;
     background: black;
     overflow-x: hidden;
+
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+body.loaded {
+    opacity: 1;
 }
 
 /* NAVBAR */
@@ -188,6 +195,11 @@ body {
 
 <script>
 
+/* FADE IN */
+window.onload = () => {
+    document.body.classList.add("loaded");
+};
+
 /* TYPEWRITER */
 let text = "Hey Love ❤️";
 let i = 0;
@@ -226,6 +238,14 @@ function toggleMusic() {
         isPlaying = false;
     }
 }
+
+/* AUTO START MUSIC ON FIRST CLICK */
+window.addEventListener("click", () => {
+    if (!isPlaying) {
+        music.play();
+        isPlaying = true;
+    }
+}, { once: true });
 
 /* HEARTS */
 setInterval(() => {
