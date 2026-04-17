@@ -36,13 +36,14 @@ body {
     pointer-events: none;
 }
 
-/* WELCOME TEXT */
+/* WELCOME */
 .welcome-text {
     font-size: 32px;
     line-height: 1.6;
+    cursor: pointer;
 }
 
-/* LOGIN CARD (PRO LEVEL) */
+/* LOGIN CARD */
 .login-card {
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(15px);
@@ -52,25 +53,19 @@ body {
     box-shadow: 0 0 30px rgba(255,255,255,0.08);
 }
 
-/* TITLE */
 .login-card h2 {
     margin-bottom: 20px;
-    font-weight: 500;
 }
 
-/* INPUT */
 .login-card input {
     width: 100%;
     padding: 12px;
     border-radius: 10px;
     border: none;
-    outline: none;
-    margin-top: 10px;
     background: rgba(255,255,255,0.1);
     color: white;
 }
 
-/* BUTTON */
 .login-card button {
     width: 100%;
     padding: 12px;
@@ -80,18 +75,33 @@ body {
     background: #ff7eb3;
     color: white;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 .login-card button:hover {
     background: #ff4b7d;
 }
 
-/* ERROR */
 #error {
     margin-top: 10px;
     color: #ff4b7d;
     display: none;
+}
+
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    background: rgba(0,0,0,0.4);
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 /* HERO */
@@ -107,18 +117,38 @@ body {
     font-size: 50px;
 }
 
-/* SECTION */
+/* SECTIONS */
 .section {
     padding: 100px 20px;
-    background: #111;
+    text-align: center;
     opacity: 0;
     transform: translateY(40px);
     transition: 1s;
+    background: #111;
 }
 
 .section.show {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* MEMORY */
+.memory img {
+    width: 250px;
+    border-radius: 12px;
+    margin: 10px;
+}
+
+/* SECRET */
+.secret {
+    margin-top: 40px;
+    cursor: pointer;
+    color: #ff7eb3;
+}
+
+.hidden-message {
+    display: none;
+    margin-top: 20px;
 }
 
 /* HEARTS */
@@ -132,22 +162,6 @@ body {
 @keyframes floatUp {
     to { transform: translateY(-100vh); opacity: 0; }
 }
-
-/* NAVBAR */
-.navbar {
-    position: fixed;
-    width: 100%;
-    padding: 15px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    background: rgba(0,0,0,0.4);
-}
-
-/* MOBILE */
-@media (max-width: 600px) {
-    .welcome-text { font-size: 24px; }
-}
 </style>
 </head>
 
@@ -158,11 +172,11 @@ body {
 </audio>
 
 <!-- WELCOME -->
-<div class="screen" id="welcome">
+<div class="screen" id="welcome" onclick="goLogin()">
     <div class="welcome-text">
         <span id="typed"></span><br><br>
         <span id="typed2"></span><br><br>
-        I made something for you ✨
+        <small>Tap anywhere to continue ❤️</small>
     </div>
 </div>
 
@@ -170,11 +184,8 @@ body {
 <div class="screen hidden" id="login">
     <div class="login-card">
         <h2>Enter password</h2>
-
         <input type="password" id="pass" placeholder="Only you know..." />
-
         <button onclick="check()">Unlock</button>
-
         <div id="error">Wrong password ❤️</div>
     </div>
 </div>
@@ -185,17 +196,42 @@ body {
 <div class="navbar">
     <a href="#home">Home</a>
     <a href="#memories">Memories</a>
+    <a href="#letters">Letters</a>
 </div>
 
-<div class="hero">
+<section class="hero" id="home">
     <h1 id="typedText"></h1>
-</div>
+</section>
 
-<div class="section" id="memories">
+<section class="section" id="memories">
     <h2>Our Memories 📸</h2>
-    <img src="photo1.jpeg" width="250">
-    <p>The day everything started ❤️</p>
-</div>
+
+    <div class="memory">
+        <img src="photo1.jpeg">
+        <p>The day everything started ❤️</p>
+    </div>
+
+    <div class="memory">
+        <img src="photo2.jpeg">
+        <p>Still my favorite day ✨</p>
+    </div>
+</section>
+
+<section class="section" id="letters">
+    <h2>For You 💌</h2>
+    <p>
+        I don’t always say this… but you changed something in me.
+        In the best way possible.
+    </p>
+
+    <div class="secret" onclick="revealSecret()">
+        Tap here… but only if you really want to know ❤️
+    </div>
+
+    <div class="hidden-message" id="secretMsg">
+        You are my safe place. Always.
+    </div>
+</section>
 
 </div>
 
@@ -221,7 +257,7 @@ function typeLine1() {
 
         setTimeout(typeLine1, 80);
     } else {
-        setTimeout(typeLine2, 400);
+        setTimeout(typeLine2, 500);
     }
 }
 
@@ -235,11 +271,14 @@ function typeLine2() {
 
 typeLine1();
 
-/* FLOW */
-setTimeout(() => {
+/* CLICK TO LOGIN */
+function goLogin() {
     document.getElementById("welcome").classList.add("hidden");
     document.getElementById("login").classList.remove("hidden");
-}, 3500);
+}
+
+/* AUTO WAIT (longer now) */
+setTimeout(goLogin, 6000);
 
 /* LOGIN */
 function check() {
@@ -279,6 +318,11 @@ window.addEventListener("scroll", () => {
         }
     });
 });
+
+/* SECRET */
+function revealSecret() {
+    document.getElementById("secretMsg").style.display = "block";
+}
 
 /* HEARTS */
 setInterval(() => {
