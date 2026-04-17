@@ -6,6 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+
+/* =====================================================
+   🔹 GLOBAL RESET & BASE STYLES
+   ===================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -19,7 +23,9 @@ body {
     overflow-x: hidden;
 }
 
-/* SCREEN */
+/* =====================================================
+   🔹 SCREEN SYSTEM (WELCOME / LOGIN TRANSITIONS)
+   ===================================================== */
 .screen {
     position: absolute;
     width: 100%;
@@ -36,14 +42,18 @@ body {
     pointer-events: none;
 }
 
-/* WELCOME */
+/* =====================================================
+   🔹 WELCOME SCREEN TEXT
+   ===================================================== */
 .welcome-text {
     font-size: 32px;
     line-height: 1.6;
     cursor: pointer;
 }
 
-/* LOGIN CARD */
+/* =====================================================
+   🔹 LOGIN CARD UI (GLASS EFFECT)
+   ===================================================== */
 .login-card {
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(15px);
@@ -87,7 +97,9 @@ body {
     display: none;
 }
 
-/* NAVBAR */
+/* =====================================================
+   🔹 NAVBAR (TOP MENU LINKS)
+   ===================================================== */
 .navbar {
     position: fixed;
     width: 100%;
@@ -104,7 +116,9 @@ body {
     font-weight: bold;
 }
 
-/* HERO */
+/* =====================================================
+   🔹 HERO SECTION (MAIN IMAGE + TITLE)
+   ===================================================== */
 .hero {
     height: 100vh;
     background: url("photo1.jpeg") center/cover no-repeat;
@@ -117,7 +131,9 @@ body {
     font-size: 50px;
 }
 
-/* SECTIONS */
+/* =====================================================
+   🔹 GENERIC SECTION STYLE (SCROLL ANIMATION)
+   ===================================================== */
 .section {
     padding: 100px 20px;
     text-align: center;
@@ -132,7 +148,9 @@ body {
     transform: translateY(0);
 }
 
-/* 🔥 NEW MEMORY SCROLL */
+/* =====================================================
+   🔹 MEMORIES HORIZONTAL SCROLL
+   ===================================================== */
 .memory-scroll {
     display: flex;
     gap: 20px;
@@ -161,7 +179,9 @@ body {
     margin-top: 10px;
 }
 
-/* BUTTON */
+/* =====================================================
+   🔹 SHOW MORE BUTTON
+   ===================================================== */
 .show-more {
     margin-top: 20px;
     padding: 10px 20px;
@@ -172,7 +192,9 @@ body {
     cursor: pointer;
 }
 
-/* SECRET */
+/* =====================================================
+   🔹 SECRET MESSAGE SECTION
+   ===================================================== */
 .secret {
     margin-top: 40px;
     cursor: pointer;
@@ -184,7 +206,9 @@ body {
     margin-top: 20px;
 }
 
-/* HEARTS */
+/* =====================================================
+   🔹 FLOATING HEART ANIMATION
+   ===================================================== */
 .heart {
     position: fixed;
     bottom: -10px;
@@ -195,16 +219,22 @@ body {
 @keyframes floatUp {
     to { transform: translateY(-100vh); opacity: 0; }
 }
+
 </style>
 </head>
 
 <body>
 
+<!-- =====================================================
+     🔹 BACKGROUND MUSIC
+     ===================================================== -->
 <audio id="bgMusic" loop>
     <source src="music.mp3">
 </audio>
 
-<!-- WELCOME -->
+<!-- =====================================================
+     🔹 WELCOME SCREEN (TYPEWRITER TEXT)
+     ===================================================== -->
 <div class="screen" id="welcome" onclick="goLogin()">
     <div class="welcome-text">
         <span id="typed"></span><br><br>
@@ -213,7 +243,9 @@ body {
     </div>
 </div>
 
-<!-- LOGIN -->
+<!-- =====================================================
+     🔹 LOGIN SCREEN (PASSWORD)
+     ===================================================== -->
 <div class="screen hidden" id="login">
     <div class="login-card">
         <h2>Enter password</h2>
@@ -223,20 +255,24 @@ body {
     </div>
 </div>
 
-<!-- HOME -->
+<!-- =====================================================
+     🔹 MAIN HOME CONTENT
+     ===================================================== -->
 <div id="home" style="display:none;">
 
+<!-- 🔹 NAVBAR -->
 <div class="navbar">
     <a href="#home">Home</a>
     <a href="#memories">Memories</a>
     <a href="#letters">Letters</a>
 </div>
 
+<!-- 🔹 HERO -->
 <section class="hero" id="home">
     <h1 id="typedText"></h1>
 </section>
 
-<!-- 🔥 UPDATED MEMORIES -->
+<!-- 🔹 MEMORIES -->
 <section class="section" id="memories">
     <h2>Our Memories 📸</h2>
 
@@ -257,6 +293,7 @@ body {
     <button class="show-more">Show More ❤️</button>
 </section>
 
+<!-- 🔹 LETTER SECTION -->
 <section class="section" id="letters">
     <h2>For You 💌</h2>
     <p>
@@ -277,7 +314,9 @@ body {
 
 <script>
 
-/* MUSIC */
+/* =====================================================
+   🔹 MUSIC CONTROL (USER INTERACTION BASED)
+   ===================================================== */
 let music = document.getElementById("bgMusic");
 let musicStarted = false;
 
@@ -291,7 +330,9 @@ function startMusic() {
 
 document.addEventListener("click", startMusic, { once: true });
 
-/* TYPING */
+/* =====================================================
+   🔹 TYPEWRITER EFFECT (WELCOME SCREEN)
+   ===================================================== */
 let line1 = "Vanakkam Kuttima 🙏❤️";
 let line2 = "AKA VIDHU MAA ❤️";
 
@@ -317,7 +358,9 @@ function typeLine2() {
 
 typeLine1();
 
-/* FLOW */
+/* =====================================================
+   🔹 SCREEN FLOW (WELCOME → LOGIN)
+   ===================================================== */
 function goLogin() {
     startMusic();
     document.getElementById("welcome").classList.add("hidden");
@@ -326,7 +369,9 @@ function goLogin() {
 
 setTimeout(goLogin, 6000);
 
-/* LOGIN */
+/* =====================================================
+   🔹 PASSWORD CHECK
+   ===================================================== */
 function check() {
     if (document.getElementById("pass").value === "2502") {
         document.getElementById("login").classList.add("hidden");
@@ -341,7 +386,9 @@ function check() {
     }
 }
 
-/* MAIN TEXT */
+/* =====================================================
+   🔹 HERO TEXT TYPEWRITER
+   ===================================================== */
 function startMain() {
     let text = "Hey Love ❤️";
     let i = 0;
@@ -356,7 +403,9 @@ function startMain() {
     type();
 }
 
-/* SCROLL */
+/* =====================================================
+   🔹 SCROLL ANIMATION (FADE IN)
+   ===================================================== */
 window.addEventListener("scroll", () => {
     document.querySelectorAll(".section").forEach(sec => {
         if (sec.getBoundingClientRect().top < window.innerHeight - 100) {
@@ -365,12 +414,16 @@ window.addEventListener("scroll", () => {
     });
 });
 
-/* SECRET */
+/* =====================================================
+   🔹 SECRET MESSAGE REVEAL
+   ===================================================== */
 function revealSecret() {
     document.getElementById("secretMsg").style.display = "block";
 }
 
-/* HEARTS */
+/* =====================================================
+   🔹 FLOATING HEARTS GENERATOR
+   ===================================================== */
 setInterval(() => {
     let heart = document.createElement("div");
     heart.className = "heart";
