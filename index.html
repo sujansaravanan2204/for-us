@@ -15,6 +15,8 @@
 body {
     font-family: 'Segoe UI', sans-serif;
     color: white;
+    background: black;
+    overflow-x: hidden;
 }
 
 /* NAVBAR */
@@ -26,7 +28,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 30px;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.4);
     backdrop-filter: blur(10px);
     z-index: 1000;
 }
@@ -34,47 +36,82 @@ body {
 .navbar a {
     color: white;
     text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
 }
 
-.navbar a:hover {
-    opacity: 0.7;
-}
-
-/* HERO SECTION (BACKGROUND IMAGE) */
+/* HERO */
 .hero {
     height: 100vh;
-    background: url("photo1.jpeg") no-repeat center center/cover;
+    background: url("photo1.jpeg") center/cover no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
 
-.hero h1 {
-    font-size: 60px;
+/* TYPE TEXT */
+#typedText {
+    font-size: 50px;
     text-shadow: 0 0 20px black;
 }
 
-/* SECTION STYLE */
+/* SECTIONS */
 .section {
     padding: 100px 20px;
     text-align: center;
-    background: #111;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 1s;
 }
 
-.section h2 {
-    margin-bottom: 20px;
+.section.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* MEMORY IMAGES */
+/* IMAGES */
 .memory img {
     width: 250px;
     border-radius: 12px;
     margin: 10px;
 }
 
+/* FLOATING HEARTS */
+.heart {
+    position: fixed;
+    bottom: -10px;
+    color: pink;
+    animation: floatUp 6s linear infinite;
+    font-size: 20px;
+}
+
+@keyframes floatUp {
+    from {transform: translateY(0); opacity:1;}
+    to {transform: translateY(-100vh); opacity:0;}
+}
+
+/* MUSIC BUTTON */
+.music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.2);
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* SECRET */
+.secret {
+    margin-top: 40px;
+    cursor: pointer;
+    color: #ff7eb3;
+}
+
+.hidden-message {
+    display: none;
+    margin-top: 20px;
+    font-size: 20px;
+}
 </style>
 </head>
 
@@ -89,7 +126,7 @@ body {
 
 <!-- HERO -->
 <section class="hero" id="home">
-    <h1>Hey Love ❤️</h1>
+    <h1 id="typedText"></h1>
 </section>
 
 <!-- MEMORIES -->
@@ -98,23 +135,94 @@ body {
 
     <div class="memory">
         <img src="photo1.jpeg">
-        <p>Our first memory ❤️</p>
+        <p>Our first moment ❤️</p>
     </div>
 
     <div class="memory">
         <img src="photo2.jpeg">
-        <p>Another beautiful moment ✨</p>
+        <p>Still my favorite day ✨</p>
     </div>
 </section>
 
-<!-- LETTERS -->
+<!-- LETTER -->
 <section class="section" id="letters">
-    <h2>Letters 💌</h2>
-    <p>
-        You can write something personal here…  
-        This is where it becomes special.
-    </p>
+    <h2>For You 💌</h2>
+    <p>I don’t say this enough… but you mean more than you think.</p>
+
+    <div class="secret" onclick="revealSecret()">
+        Tap here… but only if you really want to know ❤️
+    </div>
+
+    <div class="hidden-message" id="secretMsg">
+        You are my safe place. Always.
+    </div>
 </section>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-btn" onclick="toggleMusic()">🎵</div>
+
+<script>
+
+/* TYPEWRITER */
+let text = "Hey Love ❤️";
+let i = 0;
+
+function typeWriter() {
+    if (i < text.length) {
+        document.getElementById("typedText").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 80);
+    }
+}
+typeWriter();
+
+/* SCROLL FADE */
+let sections = document.querySelectorAll(".section");
+
+window.addEventListener("scroll", () => {
+    sections.forEach(sec => {
+        let top = sec.getBoundingClientRect().top;
+        if (top < window.innerHeight - 100) {
+            sec.classList.add("show");
+        }
+    });
+});
+
+/* MUSIC */
+let music = document.getElementById("bgMusic");
+let isPlaying = false;
+
+function toggleMusic() {
+    if (!isPlaying) {
+        music.play();
+        isPlaying = true;
+    } else {
+        music.pause();
+        isPlaying = false;
+    }
+}
+
+/* HEARTS */
+setInterval(() => {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}, 500);
+
+/* SECRET */
+function revealSecret() {
+    document.getElementById("secretMsg").style.display = "block";
+}
+
+</script>
 
 </body>
 </html>
