@@ -15,6 +15,13 @@ body {
     align-items: center;
     height: 100vh;
     font-family: 'Segoe UI', sans-serif;
+
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+body.loaded {
+    opacity: 1;
 }
 
 /* BOX */
@@ -49,6 +56,14 @@ button {
     display: none;
 }
 
+/* UNLOCK TEXT */
+#unlockText {
+    margin-top: 15px;
+    opacity: 0;
+    transition: 0.5s;
+    color: #ff7eb3;
+}
+
 /* MOBILE */
 @media (max-width: 600px) {
     input {
@@ -69,15 +84,34 @@ button {
     <button onclick="check()">Enter</button>
 
     <div id="error">Wrong password ❤️</div>
+
+    <div id="unlockText">Unlocking...</div>
 </div>
 
 <script>
 
+/* FADE IN */
+window.onload = () => {
+    document.body.classList.add("loaded");
+};
+
+/* LOGIN CHECK */
 function check() {
     let p = document.getElementById("pass").value;
 
-    if (p === "kuttima") {   // 🔑 CHANGE THIS PASSWORD
-        window.location.href = "intro.html";
+    if (p === "kuttima") {
+
+        document.getElementById("unlockText").style.opacity = "1";
+
+        setTimeout(() => {
+            document.body.classList.remove("loaded");
+
+            setTimeout(() => {
+                window.location.href = "intro.html";
+            }, 500);
+
+        }, 1000);
+
     } else {
         document.getElementById("error").style.display = "block";
     }
