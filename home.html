@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Us ❤️</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    background: black;
+    overflow-x: hidden;
+}
+
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* HERO */
+.hero {
+    height: 100vh;
+    background: url("photo1.jpeg") center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#typedText {
+    font-size: 50px;
+    text-shadow: 0 0 20px black;
+}
+
+/* SECTIONS */
+.section {
+    padding: 100px 20px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 1s;
+    background: #111;
+}
+
+.section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* MEMORIES */
+.memory img {
+    width: 250px;
+    border-radius: 12px;
+    margin: 10px;
+}
+
+/* HEARTS */
+.heart {
+    position: fixed;
+    bottom: -10px;
+    color: pink;
+    animation: floatUp 6s linear infinite;
+    font-size: 20px;
+}
+
+@keyframes floatUp {
+    from {transform: translateY(0); opacity:1;}
+    to {transform: translateY(-100vh); opacity:0;}
+}
+
+/* MUSIC BUTTON */
+.music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.2);
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* SECRET */
+.secret {
+    margin-top: 40px;
+    cursor: pointer;
+    color: #ff7eb3;
+}
+
+.hidden-message {
+    display: none;
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    #typedText {
+        font-size: 28px;
+    }
+
+    .memory img {
+        width: 90%;
+    }
+
+    .navbar {
+        gap: 15px;
+        font-size: 14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <a href="#home">Home</a>
+    <a href="#memories">Memories</a>
+    <a href="#letters">Letters</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <h1 id="typedText"></h1>
+</section>
+
+<!-- MEMORIES -->
+<section class="section" id="memories">
+    <h2>Our Memories 📸</h2>
+
+    <div class="memory">
+        <img src="photo1.jpeg">
+        <p>The day everything started ❤️</p>
+    </div>
+
+    <div class="memory">
+        <img src="photo2.jpeg">
+        <p>Still my favorite day ✨</p>
+    </div>
+</section>
+
+<!-- LETTER -->
+<section class="section" id="letters">
+    <h2>For You 💌</h2>
+    <p>
+        I don’t always say this… but you changed something in me.
+        In the best way possible.
+    </p>
+
+    <div class="secret" onclick="revealSecret()">
+        Tap here… but only if you really want to know ❤️
+    </div>
+
+    <div class="hidden-message" id="secretMsg">
+        You are my safe place. Always.
+    </div>
+</section>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-btn" onclick="toggleMusic()">🎵</div>
+
+<script>
+
+/* TYPEWRITER */
+let text = "Hey Love ❤️";
+let i = 0;
+
+function typeWriter() {
+    if (i < text.length) {
+        document.getElementById("typedText").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 80);
+    }
+}
+typeWriter();
+
+/* SCROLL FADE */
+let sections = document.querySelectorAll(".section");
+
+window.addEventListener("scroll", () => {
+    sections.forEach(sec => {
+        let top = sec.getBoundingClientRect().top;
+        if (top < window.innerHeight - 100) {
+            sec.classList.add("show");
+        }
+    });
+});
+
+/* MUSIC */
+let music = document.getElementById("bgMusic");
+let isPlaying = false;
+
+function toggleMusic() {
+    if (!isPlaying) {
+        music.play();
+        isPlaying = true;
+    } else {
+        music.pause();
+        isPlaying = false;
+    }
+}
+
+/* HEARTS */
+setInterval(() => {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}, 500);
+
+/* SECRET */
+function revealSecret() {
+    document.getElementById("secretMsg").style.display = "block";
+}
+
+/* AUTO MESSAGE */
+setTimeout(() => {
+    alert("Hey… just wanted to remind you something ❤️");
+}, 15000);
+
+</script>
+
+</body>
+</html>
