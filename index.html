@@ -7,8 +7,14 @@
 
 <style>
 
-/* GLOBAL */
-* { margin:0; padding:0; box-sizing:border-box; }
+/* =====================================================
+   🔹 GLOBAL RESET & BASE STYLES
+   ===================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
     font-family: 'Segoe UI', sans-serif;
@@ -17,128 +23,203 @@ body {
     overflow-x: hidden;
 }
 
-/* SCREENS */
+/* =====================================================
+   🔹 SCREEN SYSTEM (WELCOME / LOGIN TRANSITIONS)
+   ===================================================== */
 .screen {
-    position:absolute;
-    width:100%;
-    height:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    transition:1s;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: opacity 1s;
 }
 
-.hidden { opacity:0; pointer-events:none; }
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
 
-/* LOGIN */
+/* =====================================================
+   🔹 WELCOME SCREEN TEXT
+   ===================================================== */
+.welcome-text {
+    font-size: 32px;
+    line-height: 1.6;
+    cursor: pointer;
+}
+
+/* =====================================================
+   🔹 LOGIN CARD UI (GLASS EFFECT)
+   ===================================================== */
 .login-card {
-    background:rgba(255,255,255,0.05);
-    padding:40px;
-    border-radius:16px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    padding: 40px 30px;
+    border-radius: 16px;
+    width: 280px;
+    box-shadow: 0 0 30px rgba(255,255,255,0.08);
+}
+
+.login-card h2 {
+    margin-bottom: 20px;
 }
 
 .login-card input {
-    width:100%;
-    padding:12px;
-    border-radius:10px;
-    border:none;
-    margin-top:10px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: white;
 }
 
 .login-card button {
-    width:100%;
-    padding:12px;
-    margin-top:15px;
-    border:none;
-    border-radius:10px;
-    background:#ff7eb3;
-    color:white;
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #ff7eb3;
+    color: white;
+    cursor: pointer;
 }
 
-/* HERO */
+.login-card button:hover {
+    background: #ff4b7d;
+}
+
+#error {
+    margin-top: 10px;
+    color: #ff4b7d;
+    display: none;
+}
+
+/* =====================================================
+   🔹 NAVBAR (TOP MENU LINKS)
+   ===================================================== */
+.navbar {
+    position: fixed;
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    background: rgba(0,0,0,0.4);
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* =====================================================
+   🔹 HERO SECTION (MAIN IMAGE + TITLE)
+   ===================================================== */
 .hero {
-    height:100vh;
-    background:url("photo1.jpeg") center/cover no-repeat;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    height: 100vh;
+    background: url("photo1.jpeg") center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#typedText { font-size:50px; }
+#typedText {
+    font-size: 50px;
+}
 
-/* SECTION */
+/* =====================================================
+   🔹 GENERIC SECTION STYLE (SCROLL ANIMATION)
+   ===================================================== */
 .section {
-    padding:100px 20px;
-    text-align:center;
-    opacity:0;
-    transform:translateY(40px);
-    transition:1s;
+    padding: 100px 20px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 1s;
+    background: #111;
 }
 
 .section.show {
-    opacity:1;
-    transform:translateY(0);
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* MEMORIES */
+/* =====================================================
+   🔹 MEMORIES HORIZONTAL SCROLL
+   ===================================================== */
 .memory-scroll {
-    display:flex;
-    gap:20px;
-    overflow-x:auto;
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 20px;
+    scroll-snap-type: x mandatory;
+}
+
+.memory-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.memory-card {
+    min-width: 240px;
+    flex-shrink: 0;
+    scroll-snap-align: center;
+    text-align: center;
 }
 
 .memory-card img {
-    width:240px;
-    height:280px;
-    object-fit:cover;
-    border-radius:12px;
+    width: 100%;
+    height: 280px;        /* 👈 controls size */
+    object-fit: cover;    /* 👈 fixes zoom issue */
+    border-radius: 12px;
 }
 
-/* ✅ FIXED LINKS (VERTICAL) */
-.love-links {
-    margin-top:25px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:15px;
+.memory-card p {
+    margin-top: 10px;
 }
 
-.love-links a {
-    width:280px;
-    padding:12px;
-    border-radius:10px;
-    background:rgba(255,255,255,0.08);
-    text-decoration:none;
-    color:white;
-    transition:0.3s;
+/* =====================================================
+   🔹 SHOW MORE BUTTON
+   ===================================================== */
+.show-more {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #ff7eb3;
+    color: white;
+    cursor: pointer;
 }
 
-.love-links a:hover {
-    background:#ff4b7d;
-}
-
-/* ✅ SECRET BUTTON BACK */
+/* =====================================================
+   🔹 SECRET MESSAGE SECTION
+   ===================================================== */
 .secret {
-    margin-top:40px;
-    cursor:pointer;
-    color:#ff7eb3;
+    margin-top: 40px;
+    cursor: pointer;
+    color: #ff7eb3;
 }
 
 .hidden-message {
-    display:none;
-    margin-top:20px;
+    display: none;
+    margin-top: 20px;
 }
 
-/* HEART */
+/* =====================================================
+   🔹 FLOATING HEART ANIMATION
+   ===================================================== */
 .heart {
-    position:fixed;
-    bottom:-10px;
-    animation:floatUp 6s linear infinite;
+    position: fixed;
+    bottom: -10px;
+    color: pink;
+    animation: floatUp 6s linear infinite;
 }
 
 @keyframes floatUp {
-    to { transform:translateY(-100vh); opacity:0; }
+    to { transform: translateY(-100vh); opacity: 0; }
 }
 
 </style>
@@ -146,157 +227,248 @@ body {
 
 <body>
 
+<!-- =====================================================
+     🔹 BACKGROUND MUSIC
+     ===================================================== -->
 <audio id="bgMusic" loop>
     <source src="music.mp3">
 </audio>
 
-<!-- WELCOME -->
+<!-- =====================================================
+     🔹 WELCOME SCREEN (TYPEWRITER TEXT)
+     ===================================================== -->
 <div class="screen" id="welcome" onclick="goLogin()">
-    <div>
-        <h2 id="typed"></h2><br>
-        <h3 id="typed2"></h3>
-        <p>Tap ❤️</p>
+    <div class="welcome-text">
+        <span id="typed"></span><br><br>
+        <span id="typed2"></span><br><br>
+        <small>Tap to enter our world ❤️</small>
     </div>
 </div>
 
-<!-- LOGIN -->
+<!-- =====================================================
+     🔹 LOGIN SCREEN (PASSWORD)
+     ===================================================== -->
 <div class="screen hidden" id="login">
     <div class="login-card">
-        <h2>Password</h2>
-        <input type="password" id="pass">
+        <h2>Enter password</h2>
+        <input type="password" id="pass" placeholder="Only you know..." />
         <button onclick="check()">Unlock</button>
-        <div id="error" style="color:red; display:none;">Wrong password</div>
+        <div id="error">Wrong password ❤️</div>
     </div>
 </div>
 
-<!-- MAIN -->
+<!-- =====================================================
+     🔹 MAIN HOME CONTENT
+     ===================================================== -->
 <div id="home" style="display:none;">
 
-<section class="hero">
+<!-- 🔹 NAVBAR -->
+<div class="navbar">
+    <a href="#home">Home</a>
+    <a href="#memories">Memories</a>
+    <a href="#letters">Letters</a>
+</div>
+
+<!-- 🔹 HERO -->
+<section class="hero" id="home">
     <h1 id="typedText"></h1>
 </section>
 
-<section class="section">
+<!-- 🔹 MEMORIES -->
+<section class="section" id="memories">
     <h2>Our Memories 📸</h2>
 
     <div class="memory-scroll">
-        <img src="photo2.jpeg">
-        <img src="photo3.jpeg">
-        <img src="photo4.jpeg">
-    </div>
-</section>
 
-<section class="section">
+        <div class="memory-card">
+            <img src="photo2.jpeg">
+            <p>chello i just fell for you every day ❤️</p>
+        </div>
+
+        <div class="memory-card">
+            <img src="photo3.jpeg">
+            <p>the only photo where i have a chota funk 😂</p>
+        </div>
+
+       <div class="memory-card">
+            <img src="photo4.jpeg">
+            <p>Still my favorite day ✨</p>
+        </div>
+
+       <div class="memory-card">
+            <img src="photo5.jpeg">
+            <p>Smiling because of you 😊</p>
+        </div>
+
+       <div class="memory-card">
+            <img src="photo6.jpeg">
+            <p>Us > everything else ❤️</p>
+        </div>
+
+       <div class="memory-card">
+            <img src="photo7.jpeg">
+            <p>The moment I never want to forget❤️</p>
+        </div>
+
+       <div class="memory-card">
+            <img src="photo8.jpeg">
+            <p>Just us… nothing else mattered 🫶</p>
+        </div>
+
+       <div class="memory-card">
+            <img src="photo9.jpeg">
+            <p>We looked so cute here 😌</p>
+        </div>
+
+
+    </div>
+
+
+<!-- 🔹 LETTER SECTION -->
+<section class="section" id="letters">
     <h2>For You 💌</h2>
+    <p>
+        I don’t always say this… but you changed something in me.
+        In the best way possible.
+    </p>
 
-    <p>You changed something in me…</p>
-
-    <!-- ✅ FIXED LINKS -->
     <div class="love-links">
-
         <a href="https://sujansaravanan2204.github.io/for-her/" target="_blank">
-            💌 First sorry note
+            💌 The first sorry note ❤️
         </a>
-
-        <a href="https://sujansaravanan2204.github.io/I-LOVE-YOU/" target="_blank">
-            ❤️ I LOVE YOU
-        </a>
-
-        <a href="https://drive.google.com/drive/folders/1UXv0B2x2mJCxUXaH_Ijt4mJpt0j3MRJx?usp=drive_link" target="_blank">
-            📸 Our Photos
-        </a>
-
     </div>
 
-    <!-- ✅ SECRET BACK -->
     <div class="secret" onclick="revealSecret()">
-        Tap here… ❤️
+        Tap here… but only if you really want to know ❤️
     </div>
 
     <div class="hidden-message" id="secretMsg">
         You are my safe place. Always.
     </div>
-
 </section>
 
 </div>
 
 <script>
 
-/* TYPE */
-let t1="Vanakkam ❤️", t2="Vidhu maa ❤️";
-let i=0,j=0;
+/* =====================================================
+   🔹 MUSIC CONTROL (USER INTERACTION BASED)
+   ===================================================== */
+let music = document.getElementById("bgMusic");
+let musicStarted = false;
 
-function type1(){
- if(i<t1.length){
-  document.getElementById("typed").innerHTML+=t1[i++];
-  setTimeout(type1,80);
- } else setTimeout(type2,400);
+function startMusic() {
+    if (!musicStarted) {
+        music.play().then(() => {
+            musicStarted = true;
+        }).catch(() => {});
+    }
 }
 
-function type2(){
- if(j<t2.length){
-  document.getElementById("typed2").innerHTML+=t2[j++];
-  setTimeout(type2,80);
- }
+document.addEventListener("click", startMusic, { once: true });
+
+/* =====================================================
+   🔹 TYPEWRITER EFFECT (WELCOME SCREEN)
+   ===================================================== */
+let line1 = "Vanakkam Kuttima 🙏❤️";
+let line2 = "AKA VIDHU MAA ❤️";
+
+let i = 0, j = 0;
+
+function typeLine1() {
+    if (i < line1.length) {
+        document.getElementById("typed").innerHTML += line1[i];
+        i++;
+        setTimeout(typeLine1, 80);
+    } else {
+        setTimeout(typeLine2, 500);
+    }
 }
 
-type1();
-
-/* FLOW */
-function goLogin(){
- document.getElementById("welcome").classList.add("hidden");
- document.getElementById("login").classList.remove("hidden");
+function typeLine2() {
+    if (j < line2.length) {
+        document.getElementById("typed2").innerHTML += line2[j];
+        j++;
+        setTimeout(typeLine2, 80);
+    }
 }
 
-setTimeout(goLogin,5000);
+typeLine1();
 
-/* LOGIN */
-function check(){
- if(document.getElementById("pass").value==="2502"){
-  document.getElementById("login").classList.add("hidden");
-  document.getElementById("home").style.display="block";
-  startMain();
- } else {
-  document.getElementById("error").style.display="block";
- }
+/* =====================================================
+   🔹 SCREEN FLOW (WELCOME → LOGIN)
+   ===================================================== */
+function goLogin() {
+    startMusic();
+    document.getElementById("welcome").classList.add("hidden");
+    document.getElementById("login").classList.remove("hidden");
 }
 
-/* HERO */
-function startMain(){
- let txt="Hey Love ❤️",i=0;
- function t(){
-  if(i<txt.length){
-   document.getElementById("typedText").innerHTML+=txt[i++];
-   setTimeout(t,80);
-  }
- }
- t();
+setTimeout(goLogin, 6000);
+
+/* =====================================================
+   🔹 PASSWORD CHECK
+   ===================================================== */
+function check() {
+    if (document.getElementById("pass").value === "2502") {
+        document.getElementById("login").classList.add("hidden");
+
+        setTimeout(() => {
+            document.getElementById("home").style.display = "block";
+            startMain();
+        }, 800);
+
+    } else {
+        document.getElementById("error").style.display = "block";
+    }
 }
 
-/* SECRET */
-function revealSecret(){
- document.getElementById("secretMsg").style.display="block";
+/* =====================================================
+   🔹 HERO TEXT TYPEWRITER
+   ===================================================== */
+function startMain() {
+    let text = "Hey Love ❤️";
+    let i = 0;
+
+    function type() {
+        if (i < text.length) {
+            document.getElementById("typedText").innerHTML += text[i];
+            i++;
+            setTimeout(type, 80);
+        }
+    }
+    type();
 }
 
-/* SCROLL */
-window.addEventListener("scroll",()=>{
- document.querySelectorAll(".section").forEach(s=>{
-  if(s.getBoundingClientRect().top<window.innerHeight-100){
-   s.classList.add("show");
-  }
- });
+/* =====================================================
+   🔹 SCROLL ANIMATION (FADE IN)
+   ===================================================== */
+window.addEventListener("scroll", () => {
+    document.querySelectorAll(".section").forEach(sec => {
+        if (sec.getBoundingClientRect().top < window.innerHeight - 100) {
+            sec.classList.add("show");
+        }
+    });
 });
 
-/* HEARTS */
-setInterval(()=>{
- let h=document.createElement("div");
- h.className="heart";
- h.innerHTML="❤️";
- h.style.left=Math.random()*100+"vw";
- document.body.appendChild(h);
- setTimeout(()=>h.remove(),6000);
-},500);
+/* =====================================================
+   🔹 SECRET MESSAGE REVEAL
+   ===================================================== */
+function revealSecret() {
+    document.getElementById("secretMsg").style.display = "block";
+}
+
+/* =====================================================
+   🔹 FLOATING HEARTS GENERATOR
+   ===================================================== */
+setInterval(() => {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}, 500);
 
 </script>
 
